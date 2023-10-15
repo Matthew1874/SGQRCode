@@ -59,6 +59,8 @@ NS_ASSUME_NONNULL_BEGIN
 /// 辅助扫描边角长度，默认为：20.0f
 @property (nonatomic, assign) CGFloat cornerLength;
 
+/// 辅助扫描边圆角角
+@property (nonatomic, assign) CGFloat corner;
 @end
 
 NS_ASSUME_NONNULL_END

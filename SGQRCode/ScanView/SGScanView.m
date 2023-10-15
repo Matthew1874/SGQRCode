@@ -130,7 +130,7 @@
     CGContextRef context = UIGraphicsGetCurrentContext();
     CGContextSetBlendMode(context, kCGBlendModeDestinationOut);
     // 设置空白区
-    UIBezierPath *bezierPath = [UIBezierPath bezierPathWithRect:CGRectMake(borderX + 0.5 * borderLineW, borderY + 0.5 *borderLineW, borderW - borderLineW, borderH - borderLineW)];
+    UIBezierPath *bezierPath = [UIBezierPath bezierPathWithRoundedRect:CGRectMake(borderX + 0.5 * borderLineW, borderY + 0.5 *borderLineW, borderW - borderLineW, borderH - borderLineW) cornerRadius:self.configure.corner];
     [bezierPath fill];
     // 执行混合模式
     CGContextSetBlendMode(context, kCGBlendModeNormal);
@@ -175,8 +175,10 @@
         [leftTopPath addLineToPoint:CGPointMake(borderX - outsideExcess, borderY - outsideExcess)];
         [leftTopPath addLineToPoint:CGPointMake(borderX + cornerLength - outsideExcess, borderY - outsideExcess)];
     } else {
+        CGPoint center = CGPointMake(borderX + self.configure.corner, borderY + self.configure.corner);
         [leftTopPath moveToPoint:CGPointMake(borderX, borderY + cornerLength)];
-        [leftTopPath addLineToPoint:CGPointMake(borderX, borderY)];
+        [leftTopPath addLineToPoint:CGPointMake(borderX, borderY + self.configure.corner)];
+        [leftTopPath addArcWithCenter:center radius:self.configure.corner startAngle:M_PI endAngle:1.5 * M_PI clockwise:YES];
         [leftTopPath addLineToPoint:CGPointMake(borderX + cornerLength, borderY)];
     }
 
@@ -197,8 +199,10 @@
         [rightTopPath addLineToPoint:CGPointMake(borderX + borderW + outsideExcess, borderY - outsideExcess)];
         [rightTopPath addLineToPoint:CGPointMake(borderX + borderW + outsideExcess, borderY + cornerLength - outsideExcess)];
     } else {
+        CGPoint center = CGPointMake(borderX + borderW - self.configure.corner, borderY + self.configure.corner);
         [rightTopPath moveToPoint:CGPointMake(borderX + borderW - cornerLength, borderY)];
-        [rightTopPath addLineToPoint:CGPointMake(borderX + borderW, borderY)];
+        [rightTopPath addLineToPoint:CGPointMake(borderX + borderW - self.configure.corner, borderY)];
+        [rightTopPath addArcWithCenter:center radius:self.configure.corner startAngle:1.5 * M_PI endAngle:0 * M_PI clockwise:YES];
         [rightTopPath addLineToPoint:CGPointMake(borderX + borderW, borderY + cornerLength)];
     }
 
@@ -219,8 +223,10 @@
         [leftBottomPath addLineToPoint:CGPointMake(borderX - outsideExcess, borderY + borderH + outsideExcess)];
         [leftBottomPath addLineToPoint:CGPointMake(borderX - outsideExcess, borderY + borderH - cornerLength + outsideExcess)];
     } else {
+        CGPoint center = CGPointMake(borderX + self.configure.corner, borderY + borderH - self.configure.corner);
         [leftBottomPath moveToPoint:CGPointMake(borderX + cornerLength, borderY + borderH)];
-        [leftBottomPath addLineToPoint:CGPointMake(borderX, borderY + borderH)];
+        [leftBottomPath addLineToPoint:CGPointMake(borderX + self.configure.corner, borderY + borderH)];
+        [leftBottomPath addArcWithCenter:center radius:self.configure.corner startAngle:0.5 * M_PI endAngle:1.0 * M_PI clockwise:YES];
         [leftBottomPath addLineToPoint:CGPointMake(borderX, borderY + borderH - cornerLength)];
     }
 
@@ -241,8 +247,10 @@
         [rightBottomPath addLineToPoint:CGPointMake(borderX + borderW + outsideExcess, borderY + borderH + outsideExcess)];
         [rightBottomPath addLineToPoint:CGPointMake(borderX + borderW - cornerLength + outsideExcess, borderY + borderH + outsideExcess)];
     } else {
+        CGPoint center = CGPointMake(borderX + borderW - self.configure.corner, borderY + borderH - self.configure.corner);
         [rightBottomPath moveToPoint:CGPointMake(borderX + borderW, borderY + borderH - cornerLength)];
-        [rightBottomPath addLineToPoint:CGPointMake(borderX + borderW, borderY + borderH)];
+        [rightBottomPath addLineToPoint:CGPointMake(borderX + borderW, borderY + borderH - self.configure.corner)];
+        [rightBottomPath addArcWithCenter:center radius:self.configure.corner startAngle:0 * M_PI endAngle:0.5 * M_PI clockwise:YES];
         [rightBottomPath addLineToPoint:CGPointMake(borderX + borderW - cornerLength, borderY + borderH)];
     }
 
